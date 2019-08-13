@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>过滤器filters</title>
+    </head>
+    <body>
+        <!-- 需求：在页面中实时显示时间 -->
+        <!-- 过滤器格式ex：date | filter1 | filter2 -->
+
+        <div id="app">
+            <h1>过滤器</h1>
+            <p>
+                普通时间：
+                <span>{{ date }}</span>
+            </p>
+            <p>
+                自制时间（过滤器）：
+                <span>{{ date | formateDate }}</span>
+            </p>
+            <hr />
+
+            <h1>指令和事件</h1>
+
+            <h2>v-text: 解析text</h2>
+            {{ apple }} <br />
+            <span v-text="apple"></span>
+
+            <h2>v-html: 解析HTML</h2>
+            {{ banana }} <br />
+            <span v-html="banana"></span>
+
+            <h2>v-bind: 绑定活的属性</h2>
+            <span v-bind:title="message">
+                鼠标悬停几秒钟查看此处动态绑定的提示信息！
+            </span>
+
+            <h2>v-on: 绑定事件监听器</h2>
+            <p>{{ welcome }}</p>
+            <button v-on:click="reverseMessage">字符串反转</button>
+            <p>{{ count }}</p>
+            <button v-on:click="countNum">×2</button>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    date: new Date(),
+                    apple: '苹果',
+                    banana: '<span style="background:yellow;color:blue">香蕉</span>',
+                    message: '页面加载于 ' + new Date().toLocaleString(),
+                    welcome: 'Hello World!',
+                    count: 1
+                },
+                // filters：过滤器，符号：|
+                filters: {
+                    formateDate(value) {
+                        // value就是需要过滤的数据，就是 | 前面的变量
+                        var date = new Date(value)
+                        var [year, month, day, hour, minute, second] = [
+                            date.getFullYear(),
+                            date.getMonth() + 1,
+                            date.getDate(),
+                            date.getHours(),
+                            date.getMinutes(),
+                            date.getSeconds()
+                        ]
+                        return `北京时间：${year}年${month}月${day}日，${hour}:${minute}:${second}`
+                    }
+                },
+                methods: {
+                    reverseMessage: function() {
+                        this.welcome = this.welcome
+                            .split('')
+                            .reverse()
+                            .join('')
+                    },
+                    countNum: function() {
+                        if (this.count < -Math.pow(2, -1075) || this.count > Math.pow(2, 1024)) {
+                            count = '堆栈溢出'
+                            return
+                        } else {
+                            this.count = this.count << 1
+                        }
+                    }
+                },
+                mounted() {
+                    this.date = setInterval(() => {
+                        this.date = new Date().toLocaleString()
+                    }, 1000)
+                },
+                beforeDestroy() {
+                    if (this.date) {
+                        clearInterval(this.date)
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
