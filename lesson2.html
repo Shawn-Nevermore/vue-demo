@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>数据绑定和指令</title>
+    </head>
+    <body>
+        <div id="app">
+            <h2>文本插值（Mustache语法）</h2>
+            <span>message: </span>{{ message }} <br />
+            <p>
+                可以进行简单的运算：
+                <span>3600 * 24 * 365 = </span>{{ 3600 * 24 * 365 }} <br />
+            </p>
+            <p>
+                可以用三元运算符：
+                <span>6 < 2 ? message : a ==></2></span>{{ 6 < 2 ? message : a }}
+            </p>
+            <p>
+                可以使用JS表达式（不是语句）：
+                {{ message.split('').reverse().join('') }}
+            </p>
+            <p>
+                不能使用语句：
+                <!-- {{ var a = 1 }} -->
+                <!-- {{ if (ok) { return message } }} -->
+            </p>
+        </div>
+
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            var app = new Vue({
+                // element，用于指定页面中已经存在的DOM元素，挂载到DOM中，也可以是CSS
+                el: '#app',
+
+                // 可以声明应用内需要双向绑定的数据
+                data: {
+                    message: 'Hello world!',
+                    a: 2
+                },
+
+                // ----------------Vue 生命周期钩子函数---------------------------------------
+                // 生命周期钩子的 this 上下文指向调用它的 Vue 实例
+                // （注意：不要在选项属性或回调上使用箭头函数，比如 created: () => console.log(this.a) 或 vm.$watch('a', newValue => this.myMethod())。
+                // 因为箭头函数并没有 this，this 会作为变量一直向上级词法作用域查找，直至找到为止，
+                // 经常导致 Uncaught TypeError: Cannot read property of undefined 或 Uncaught TypeError: this.myMethod is not a function 之类的错误。）
+
+                created() {
+                    // alert(`Created, but not mounted to DOM.`)
+
+                    console.log('a is: ', this.a) // `this` 指向 vm 实例
+                },
+                mounted() {
+                    // alert(`Mounted to DOM.`)
+                },
+                updated() {},
+                beforeDestroy() {
+                    // 实例销毁前调用，主要解绑一些用addEventListener监听的事件
+                }
+            })
+
+            // 访问vue实例中的属性
+            console.log('app.$el:', app.$el)
+            console.log('app.$data:', app.$data)
+
+            // 访问data中的属性
+            console.log('app.message:', app.message)
+            console.log('app.a:', app.a)
+        </script>
+    </body>
+</html>
