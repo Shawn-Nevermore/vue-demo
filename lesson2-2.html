@@ -33,7 +33,7 @@
             <span v-html="banana"></span>
 
             <h2>v-bind: 绑定活的属性</h2>
-            <span v-bind:title="message">
+            <span :title="message">
                 鼠标悬停几秒钟查看此处动态绑定的提示信息！
             </span>
 
@@ -41,7 +41,7 @@
             <p>{{ welcome }}</p>
             <button v-on:click="reverseMessage">字符串反转</button>
             <p>{{ count }}</p>
-            <button v-on:click="countNum">×2</button>
+            <button @click="countNum">×2</button>
         </div>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
