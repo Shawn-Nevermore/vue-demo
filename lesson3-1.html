@@ -1,12 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>计算属性-购物车总价</title>
-</head>
-<body>
-    
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>计算属性-购物车总价</title>
+    </head>
+    <body>
+        <!-- 需求:用计算属性,返回购物车总价 -->
+        <!-- 没有解决的痛点:动态展示商品列表 -->
+        <div id="app">
+            <h1>您购买的商品有：</h1>
+            <ul>
+                <li>{{ cart1[0].model }} --- {{ cart1[0].price }}元 --- {{ cart1[0].count }}个</li>
+                <li>{{ cart1[1].model }} --- {{ cart1[1].price }}元 --- {{ cart1[1].count }}个</li>
+                <li>{{ cart1[2].model }} --- {{ cart1[2].price }}元 --- {{ cart1[2].count }}个</li>
+                <li>{{ cart2[0].model }} --- {{ cart2[0].price }}元 --- {{ cart2[0].count }}个</li>
+                <li>{{ cart2[1].model }} --- {{ cart2[1].price }}元 --- {{ cart2[1].count }}个</li>
+            </ul>
+
+            购物车的总价为：{{ totalPrice }}元
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    cart1: [
+                        { model: 'iPhone XS MAX 256G', price: 8999, count: 2 },
+                        { model: 'iPhone XS 64G', price: 6499, count: 5 },
+                        { model: 'iPad Pro 12.9inch 256G', price: 8988, count: 2 }
+                    ],
+                    cart2: [
+                        { model: 'MateBook Pro 13.9inch i7 16G 1T', price: 13999, count: 1 },
+                        { model: 'SONY TV 65inch', price: 12999, count: 10 }
+                    ]
+                },
+                computed: {
+                    totalPrice: function() {
+                        return (
+                            this.cart1.reduce((sum, n) => {
+                                return sum + n.price * n.count
+                            }, 0) +
+                            this.cart2.reduce((sum, n) => {
+                                return sum + n.price * n.count
+                            }, 0)
+                        )
+                    }
+                }
+            })
+        </script>
+    </body>
 </html>
