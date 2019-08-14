@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>v-bind绑定class</title>
+        <title>v-bind绑定class（对象语法）</title>
 
         <style>
             pre {
@@ -29,7 +29,7 @@
     </head>
     <body>
         <div id="app">
-            <!-- 绑定class对象语法，对象的键是类名，值是布尔值 -->
+            <!-- 写法一：绑定class对象语法，对象的键是类名，值是布尔值 -->
             <pre id="code" :class="{'font-day':isWhite, 'bg-day':isBlack, border:hasBorder}">
     data: {
       isActive: true,

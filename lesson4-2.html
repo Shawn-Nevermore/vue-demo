@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>v-bind绑定style</title>
+    </head>
+    <body>
+        <div id="app">
+            <pre id="code" :style="styleObject">
+data: {
+    isActive: true,
+    error: null
+},
+computed: {
+    classObject: function () {
+        return {
+            active: this.isActive && !this.error,
+            'text-danger': this.error && this.error.type === 'fatal'
+        }
+    }
+}
+            </pre>
+            <!-- <input type="button" @click="changeColor" value="变色" /> -->
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    styleObject: {
+                        color: '#fff',
+                        background: '#292929',
+                        padding: '1rem'
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
