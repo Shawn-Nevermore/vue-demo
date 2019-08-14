@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>基本指令</title>
+
+        <style>
+            .lazyLoad {
+                border: 1px solid red;
+            }
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <h1>v-cloak:</h1>
+            <p>
+                作用：解决初始化慢导致页面闪动<br />
+                范式：一般与 <code>display:none</code> 结合使用
+            </p>
+            <div class="lazyLoad" v-cloak>{{ message }}</div>
+            <hr />
+            <h1>v-once:</h1>
+            <p>作用：定义它的元素和组件只渲染一次<br /></p>
+            <span v-once style="border:1px solid blue">{{ onceData }}</span>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            var app = setTimeout(() => {
+                new Vue({
+                    el: '#app',
+                    data: {
+                        message: '加载完成',
+                        onceData: '这个元素只会渲染一次，更改值无效'
+                    }
+                })
+            }, 2000)
+        </script>
+    </body>
+</html>
