@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>v-bind绑定class</title>
+
+        <style>
+            pre {
+                padding: 1rem;
+                border: 2px solid #292929;
+                overflow: auto;
+            }
+            input {
+                padding: 1em;
+                font-size: 1rem;
+            }
+            .font-day {
+                color: #fff;
+            }
+            .bg-day {
+                background: #292929;
+            }
+            .border {
+                border: 2px solid #ddd;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <!-- 绑定class对象语法，对象的键是类名，值是布尔值 -->
+            <pre id="code" :class="{'font-day':isWhite, 'bg-day':isBlack, border:hasBorder}">
+    data: {
+      isActive: true,
+      error: null
+    },
+    computed: {
+      classObject: function () {
+        return {
+          active: this.isActive && !this.error,
+          'text-danger': this.error && this.error.type === 'fatal'
+        }
+      }
+    }
+            </pre>
+            <input type="button" @click="changeColor" value="变色" />
+        </div>
+
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    isWhite: false,
+                    isBlack: false,
+                    hasBorder: true
+                },
+                methods: {
+                    changeColor() {
+                        this.isWhite = !this.isWhite
+                        this.isBlack = !this.isBlack
+                        this.hasBorder = !this.hasBorder
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
