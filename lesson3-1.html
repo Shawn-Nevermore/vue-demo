@@ -12,14 +12,14 @@
         <div id="app">
             <h1>您购买的商品有：</h1>
             <ul>
-                <li>{{ cart1[0].model }} --- {{ cart1[0].price }}元 --- {{ cart1[0].count }}个</li>
-                <li>{{ cart1[1].model }} --- {{ cart1[1].price }}元 --- {{ cart1[1].count }}个</li>
-                <li>{{ cart1[2].model }} --- {{ cart1[2].price }}元 --- {{ cart1[2].count }}个</li>
-                <li>{{ cart2[0].model }} --- {{ cart2[0].price }}元 --- {{ cart2[0].count }}个</li>
-                <li>{{ cart2[1].model }} --- {{ cart2[1].price }}元 --- {{ cart2[1].count }}个</li>
+                <li>{{ cart1[0].model }} --- ￥{{ cart1[0].price }} --- {{ cart1[0].count }}个</li>
+                <li>{{ cart1[1].model }} --- ￥{{ cart1[1].price }} --- {{ cart1[1].count }}个</li>
+                <li>{{ cart1[2].model }} --- ￥{{ cart1[2].price }} --- {{ cart1[2].count }}个</li>
+                <li>{{ cart2[0].model }} --- ￥{{ cart2[0].price }} --- {{ cart2[0].count }}个</li>
+                <li>{{ cart2[1].model }} --- ￥{{ cart2[1].price }} --- {{ cart2[1].count }}个</li>
             </ul>
 
-            购物车的总价为：{{ totalPrice }}元
+            两个购物车的总价为：￥{{ totalPrice }} 购买时间：{{ now }}
         </div>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
@@ -27,6 +27,12 @@
             crossorigin="anonymous"
         ></script>
         <script>
+            var msg = new Vue({
+                el: '#msg',
+                data: {
+                    text: '谢谢惠顾，欢迎购买！'
+                }
+            })
             var app = new Vue({
                 el: '#app',
                 data: {
@@ -48,8 +54,15 @@
                             }, 0) +
                             this.cart2.reduce((sum, n) => {
                                 return sum + n.price * n.count
-                            }, 0)
+                            }, 0) +
+                            // 计算属性可以依赖多个Vue实例的属性
+                            `-----------------${msg.text}-----------------` // 要使用其他Vue实例中的属性，必须在本实例之前定义
                         )
+                    },
+                    now: function() {
+                        // 时间不会更新，因为计算属性是基于它们的响应式依赖进行缓存的
+                        // 要实时更新，需要在methods中定义
+                        return new Date().toLocaleString()
                     }
                 }
             })
