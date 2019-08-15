@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>条件渲染指令：v-if v-else-if v-else</title>
+    </head>
+    <body>
+        <div id="app">
+            <h1>v-if: 后面接等号，等号后的内容必须是布尔值</h1>
+            <div v-if="type==='text'">
+                <!-- 加上 key 属性可以避免placeholder切换不更新（Vue复用已有元素）-->
+                <label>用户名：</label>
+                <input type="text" name="name" placeholder="请输入用户名" key="name" />
+            </div>
+            <div v-else>
+                <label>密&nbsp;&nbsp;码：</label>
+                <input type="password" name="password" placeholder="请输入密码" key="password" />
+            </div>
+            <button @click="toggleType">切换</button>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    type: 'text'
+                },
+                methods: {
+                    toggleType: function() {
+                        this.type = this.type === 'text' ? 'password' : 'text'
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

@@ -4,22 +4,12 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>计算属性-购物车总价</title>
+        <title>计算属性</title>
     </head>
     <body>
-        <!-- 需求:用计算属性,返回购物车总价 -->
-        <!-- 没有解决的痛点:动态展示商品列表 -->
+        <!-- 需求：将字符串'123,456,789'变成'789,456,123' -->
         <div id="app">
-            <h1>您购买的商品有：</h1>
-            <ul>
-                <li>{{ cart1[0].model }} --- ￥{{ cart1[0].price }} --- {{ cart1[0].count }}个</li>
-                <li>{{ cart1[1].model }} --- ￥{{ cart1[1].price }} --- {{ cart1[1].count }}个</li>
-                <li>{{ cart1[2].model }} --- ￥{{ cart1[2].price }} --- {{ cart1[2].count }}个</li>
-                <li>{{ cart2[0].model }} --- ￥{{ cart2[0].price }} --- {{ cart2[0].count }}个</li>
-                <li>{{ cart2[1].model }} --- ￥{{ cart2[1].price }} --- {{ cart2[1].count }}个</li>
-            </ul>
-
-            两个购物车的总价为：￥{{ totalPrice }} 购买时间：{{ now }}
+            {{ fn }}
         </div>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
@@ -27,42 +17,17 @@
             crossorigin="anonymous"
         ></script>
         <script>
-            var msg = new Vue({
-                el: '#msg',
-                data: {
-                    text: '谢谢惠顾，欢迎购买！'
-                }
-            })
             var app = new Vue({
                 el: '#app',
                 data: {
-                    cart1: [
-                        { model: 'iPhone XS MAX 256G', price: 8999, count: 2 },
-                        { model: 'iPhone XS 64G', price: 6499, count: 5 },
-                        { model: 'iPad Pro 12.9inch 256G', price: 8988, count: 2 }
-                    ],
-                    cart2: [
-                        { model: 'MateBook Pro 13.9inch i7 16G 1T', price: 13999, count: 1 },
-                        { model: 'SONY TV 65inch', price: 12999, count: 10 }
-                    ]
+                    text: '123,456,789'
                 },
                 computed: {
-                    totalPrice: function() {
-                        return (
-                            this.cart1.reduce((sum, n) => {
-                                return sum + n.price * n.count
-                            }, 0) +
-                            this.cart2.reduce((sum, n) => {
-                                return sum + n.price * n.count
-                            }, 0) +
-                            // 计算属性可以依赖多个Vue实例的属性
-                            `-----------------${msg.text}-----------------` // 要使用其他Vue实例中的属性，必须在本实例之前定义
-                        )
-                    },
-                    now: function() {
-                        // 时间不会更新，因为计算属性是基于它们的响应式依赖进行缓存的
-                        // 要实时更新，需要在methods中定义
-                        return new Date().toLocaleString()
+                    fn: function() {
+                        return this.text
+                            .split(',')
+                            .reverse()
+                            .join(',')
                     }
                 }
             })
