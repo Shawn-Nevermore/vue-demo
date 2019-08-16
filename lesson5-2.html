@@ -26,8 +26,10 @@
     <body>
         <div id="app">
             <h1>v-if:</h1>
-            <h3>用法：后面接等号，等号后的内容必须是布尔值</h3>
-            <h3>Tips:加上key属性可以避免placeholder切换不更新（Vue复用已有元素）</h3>
+            <p>
+                用法：后面接等号，等号后的内容必须是布尔值<br />
+                Tips：加上key属性可以避免placeholder切换不更新（Vue复用已有元素）
+            </p>
             <div v-if="type==='text'">
                 <label>用户名</label>
                 <input type="text" name="name" placeholder="请输入用户名" key="name" />
@@ -40,9 +42,14 @@
 
             <hr />
             <h1>v-show:</h1>
-            <h3>用法：根据布尔值展现内容</h3>
-            <h3>Tips:v-show 的元素始终会被渲染并保留在 DOM 中。v-show 只是简单地切换元素的 CSS 属性 display</h3>
+            <p>
+                用法：根据布尔值展现内容<br />
+                Tips:v-show 的元素始终会被渲染并保留在 DOM 中。v-show 只是简单地切换元素的 CSS 属性 display
+            </p>
+
             <label v-show="9<2">我没有被渲染，但是DOM结构存在，我的display=none</label>
+
+            <hr />
             <h1>总结：v-if和v-show区别</h1>
             <p>
                 1. v-if 是“真正”的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。<br />

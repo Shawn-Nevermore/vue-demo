@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>列表渲染：v-for</title>
+    </head>
+    <body>
+        <div id="app">
+            <h1>v-for：写在要遍历的元素上</h1>
+            <p>用法：遍历多个对象</p>
+            <h2>（1）遍历数组中的多个对象</h2>
+            <div id="skills">
+                <p>前端需要的技能：</p>
+                <ul>
+                    <li v-for="skill in skills">{{ skill.name }}</li>
+                </ul>
+            </div>
+            <div id="steps">
+                <p>把大象装冰箱需要几个步骤：</p>
+                <ol>
+                    <li v-for="(step, index) in steps">
+                        {{ stepsMessage }}---(index+1):{{ index + 1 }}---{{ step.step }}
+                    </li>
+                </ol>
+            </div>
+            <h2>（2）遍历对象中的属性</h2>
+
+            <div id="someone">
+                <p>许某人：</p>
+                <ul>
+                    <li v-for="(value, key, index) in someone">{{ index + 1 }}.{{ key }}: {{ value }}</li>
+                </ul>
+            </div>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    skills: [
+                        { name: 'JavaScript' },
+                        { name: 'Vue' },
+                        { name: 'HTTP' },
+                        { name: 'Node' },
+                        { name: 'Webpack' },
+                        { name: 'TypeScript' },
+                        { name: 'Flutter' }
+                    ],
+                    stepsMessage: '把大象装冰箱的步骤',
+                    steps: [{ step: '把冰箱门打开' }, { step: '把大象塞进去' }, { step: '把冰箱门关上' }],
+                    someone: {
+                        name: 'Charles',
+                        job: 'Front-end Engineer',
+                        age: 18
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
