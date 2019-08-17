@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>数组操作</title>
+        <style>
+            * {
+                transition: all 0.5s ease-in-out;
+                box-sizing: border-box;
+            }
+            .cleafix::after {
+                content: '';
+                display: block;
+                clear: both;
+            }
+            dl dt {
+                float: left;
+                width: 10%;
+                height: 25px;
+                text-align: end;
+            }
+            dl dd {
+                float: left;
+                width: 80%;
+                height: 25px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div>
+                <h3>前端需要的技能：</h3>
+                <ul>
+                    <li v-for="skill in skills">{{ skill }}</li>
+                </ul>
+                <h3>常见的数组变异方法（原数组会改变）：</h3>
+                <dl class="clearfix">
+                    <dt>push:</dt>
+                    <dd>
+                        <input v-model="message" type="text" value="尾部添加" placeholder="push你要输入的内容" />
+                        <button @click="pushArr">尾部添加</button>
+                    </dd>
+                    <dt>pop:</dt>
+                    <dd>
+                        <button @click="popArr">尾部删除</button>
+                    </dd>
+                    <dt>shift:</dt>
+                    <dd></dd>
+                    <dt>unshift:</dt>
+                    <dd></dd>
+                    <dt>splice:</dt>
+                    <dd></dd>
+                    <dt>reverse:</dt>
+                    <dd></dd>
+                    <dt>sort:</dt>
+                    <dd></dd>
+                </dl>
+            </div>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    skills: ['HTML', 'CSS', 'JavaScript'],
+                    message: ''
+                },
+                methods: {
+                    pushArr: function() {
+                        this.skills.push(this.message)
+                    },
+                    popArr: function() {
+                        this.skills.pop()
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
