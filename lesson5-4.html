@@ -18,13 +18,13 @@
             dl dt {
                 float: left;
                 width: 10%;
-                height: 25px;
+                height: 30px;
                 text-align: end;
             }
             dl dd {
                 float: left;
                 width: 80%;
-                height: 25px;
+                height: 30px;
             }
         </style>
     </head>
@@ -39,7 +39,12 @@
                 <dl class="clearfix">
                     <dt>push:</dt>
                     <dd>
-                        <input v-model="message" type="text" value="尾部添加" placeholder="push你要输入的内容" />
+                        <input
+                            v-model="pushArrInput"
+                            type="text"
+                            value="尾部添加"
+                            placeholder="尾部添加你要输入的内容"
+                        />
                         <button @click="pushArr">尾部添加</button>
                     </dd>
                     <dt>pop:</dt>
@@ -47,15 +52,35 @@
                         <button @click="popArr">尾部删除</button>
                     </dd>
                     <dt>shift:</dt>
-                    <dd></dd>
+                    <dd>
+                        <button @click="shiftArr">头部删除</button>
+                    </dd>
                     <dt>unshift:</dt>
-                    <dd></dd>
+                    <dd>
+                        <input
+                            v-model="unshiftArrInput"
+                            type="text"
+                            value="头部添加"
+                            placeholder="头部添加你要输入的内容"
+                        />
+                        <button @click="unshiftArr">头部添加</button>
+                    </dd>
                     <dt>splice:</dt>
-                    <dd></dd>
+                    <dd>
+                        <input v-model="spliceArr0Input" type="text" placeholder="输入index" />
+                        <input v-model="spliceArr1Input" type="text" placeholder="输入个数" />
+                        <input v-model="spliceArr2Input" type="text" placeholder="输入参数，用英文逗号隔开" />
+                        <button @click="spliceArr" key="ss">splice操作</button>
+                    </dd>
                     <dt>reverse:</dt>
-                    <dd></dd>
+                    <dd>
+                        <button @click="reverseArr">反转数组</button>
+                    </dd>
                     <dt>sort:</dt>
-                    <dd></dd>
+                    <dd>
+                        <button @click="sortArrAscend">升序排序</button>
+                        <button @click="sortArrDescend">降序排序</button>
+                    </dd>
                 </dl>
             </div>
         </div>
@@ -69,14 +94,41 @@
                 el: '#app',
                 data: {
                     skills: ['HTML', 'CSS', 'JavaScript'],
-                    message: ''
+                    pushArrInput: '',
+                    unshiftArrInput: '',
+                    spliceArr0Input: '',
+                    spliceArr1Input: '',
+                    spliceArr2Input: ''
                 },
                 methods: {
                     pushArr: function() {
-                        this.skills.push(this.message)
+                        this.skills.push(this.pushArrInput)
                     },
                     popArr: function() {
                         this.skills.pop()
+                    },
+                    shiftArr: function() {
+                        this.skills.shift()
+                    },
+                    unshiftArr: function() {
+                        this.skills.unshift(this.unshiftArrInput)
+                    },
+                    // 有bug，如果数据不更改，不会重新刷新index，只会在原来的index位置做修改
+                    spliceArr: function() {
+                        this.skills.splice(
+                            this.spliceArr0Input,
+                            this.spliceArr1Input,
+                            ...this.spliceArr2Input.split(',')
+                        )
+                    },
+                    reverseArr: function() {
+                        this.skills.reverse()
+                    },
+                    sortArrAscend: function() {
+                        this.skills.sort((a, b) => a.localeCompare(b)) // 字符串比较
+                    },
+                    sortArrDescend: function() {
+                        this.skills.sort((a, b) => b.localeCompare(a))
                     }
                 }
             })
