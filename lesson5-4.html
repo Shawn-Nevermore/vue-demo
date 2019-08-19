@@ -10,7 +10,7 @@
                 transition: all 0.5s ease-in-out;
                 box-sizing: border-box;
             }
-            .cleafix::after {
+            .clearfix::after {
                 content: '';
                 display: block;
                 clear: both;
@@ -19,23 +19,29 @@
                 float: left;
                 width: 10%;
                 height: 30px;
-                text-align: end;
+                text-align: right;
             }
             dl dd {
                 float: left;
                 width: 80%;
                 height: 30px;
             }
+            code {
+                background: #000;
+                color: #fff;
+            }
         </style>
     </head>
     <body>
         <div id="app">
             <div>
-                <h3>前端需要的技能：</h3>
+                <h2>前端需要的技能：</h2>
                 <ul>
                     <li v-for="skill in skills">{{ skill }}</li>
                 </ul>
-                <h3>常见的数组变异方法（原数组会改变）：</h3>
+            </div>
+            <div>
+                <h2>常见的数组变异方法（原数组会改变）：</h2>
                 <dl class="clearfix">
                     <dt>push:</dt>
                     <dd>
@@ -83,6 +89,28 @@
                     </dd>
                 </dl>
             </div>
+            <div>
+                <h2>原生js改变数组无效：</h2>
+                <ul>
+                    <li>改变数组中的某项：<code>app.skills[1] = 'x'</code> // 不是响应性的</li>
+                    <li>改变数组的长度：<code>app.skills.length = 2</code> // 不是响应性的</li>
+                </ul>
+            </div>
+            <div>
+                <h2>正确的改变数组元素的方法：</h2>
+                <ul>
+                    <li>
+                        改变数组中的某项：Vue.set(vm.items, indexOfItem, newValue)
+                        <input v-model="changeIndexInput" type="text" placeholder="请输入变更索引" />
+                        <input v-model="changeValueInput" type="text" placeholder="请输入变更内容" />
+                        <button @click="changeValue">改变数组中的某项</button>
+                    </li>
+                    <li>
+                        改变数组的长度：vm.items.splice(indexOfItem, 1, newValue) <br />
+                        请使用上面的splice
+                    </li>
+                </ul>
+            </div>
         </div>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
@@ -98,7 +126,9 @@
                     unshiftArrInput: '',
                     spliceArr0Input: '',
                     spliceArr1Input: '',
-                    spliceArr2Input: ''
+                    spliceArr2Input: '',
+                    changeIndexInput: '',
+                    changeValueInput: ''
                 },
                 methods: {
                     pushArr: function() {
@@ -129,6 +159,9 @@
                     },
                     sortArrDescend: function() {
                         this.skills.sort((a, b) => b.localeCompare(a))
+                    },
+                    changeValue: function() {
+                        Vue.set(this.skills, this.changeIndexInput, this.changeValueInput)
                     }
                 }
             })

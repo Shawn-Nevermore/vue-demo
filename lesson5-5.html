@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>事件处理</title>
+
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            .stopDiv {
+                width: 200px;
+                height: 200px;
+                background: #ffff00;
+                position: relative;
+            }
+            .stopDiv button {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        </style>
+    </head>
+    <body>
+        <div id="evtHandler">
+            <div>
+                <h1>事件修饰符</h1>
+                <h3>1).stop: 阻止事件继续传播</h3>
+                <div class="stopDiv" @click="divClick($event)">
+                    <button @click.stop="buttonClick($event)">点我</button>
+                </div>
+
+                <h3>2).prevent: 提交事件不再重载页面</h3>
+                <form action="" @submit.prevent="handle">
+                    <input type="submit" value="提交" />
+                </form>
+
+                <h3>3).self: 只当在 event.target 是当前元素自身时触发处理函数(即事件不是从内部元素触发的)</h3>
+                <div class="stopDiv" @click.self="divClick($event)">
+                    <button @click="buttonClick($event)">点我</button>
+                </div>
+
+                <h3>4)once:</h3>
+                {{ number }}
+                <button @click="countNum">无限+1</button>
+                <button @click.once="countNum">只能点一次+1</button>
+
+                <p>
+                    注意：使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。<br />
+                    因此，用 v-on:click.prevent.self 会阻止所有的点击，而 v-on:click.self.prevent
+                    只会阻止对元素自身的点击。
+                </p>
+            </div>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            var evtHandler = new Vue({
+                el: '#evtHandler',
+                data: {
+                    number: 0
+                },
+                methods: {
+                    buttonClick: function(event) {
+                        alert(`我被点击了，我是BUTTON`)
+                    },
+                    divClick: function(event) {
+                        alert(`我被点击了，我是DIV`)
+                    },
+                    handle: function() {
+                        alert('我不重载了，页面也不刷新了')
+                    },
+                    countNum: function() {
+                        this.number += 1
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
