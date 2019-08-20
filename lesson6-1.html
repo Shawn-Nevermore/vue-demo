@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>v-model</title>
+    </head>
+    <body>
+        <div id="app">
+            <div>
+                <h1>文本</h1>
+                <p>注意：所显示的值只依赖于绑定的数据，不再关心初始化时插入的value</p>
+                <input type="text" v-model="mText" placeholder="edit me" />
+                <p>Text is: {{ mText }}</p>
+            </div>
+            <hr />
+
+            <div>
+                <h1>多行文本</h1>
+                <textarea v-model="mMultiMsg" cols="30" rows="10">这里的字不会被显示</textarea>
+                <br />
+                <span>Multiline message is:</span>
+                <p style="white-space: pre-line;">{{ mMultiMsg }}</p>
+            </div>
+            <hr />
+
+            <div>
+                <h1>单选按钮</h1>
+                <label><input type="radio" value="One" v-model="picked" />One</label>
+                <br />
+                <label><input type="radio" value="Two" v-model="picked" />Two</label>
+                <br />
+                <span>Picked: {{ picked }}</span>
+            </div>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    mText: '',
+                    mMultiMsg: '',
+                    picked: ''
+                }
+            })
+        </script>
+    </body>
+</html>

@@ -54,6 +54,14 @@
                     只会阻止对元素自身的点击。
                 </p>
             </div>
+
+            <div>
+                <h1>按键修饰符</h1>
+
+                <input type="text" placeholder="请输入账号" />
+                <input type="password" placeholder="请输入密码" />
+                <input type="submit" @keyup.enter="submit" />
+            </div>
         </div>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
@@ -78,6 +86,9 @@
                     },
                     countNum: function() {
                         this.number += 1
+                    },
+                    submit: function() {
+                        alert('按回车提交了表单')
                     }
                 }
             })
