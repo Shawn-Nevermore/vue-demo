@@ -33,6 +33,41 @@
                 <br />
                 <span>Picked: {{ picked }}</span>
             </div>
+            <hr />
+
+            <div>
+                <h1>复选框</h1>
+                <label>张麻子<input type="checkbox" v-model="rzdf" value="张麻子" id=""/></label>
+                <label>师爷<input type="checkbox" v-model="rzdf" value="师爷" id=""/></label>
+                <label>黄老爷<input type="checkbox" v-model="rzdf" value="黄老爷" id=""/></label>
+                <br />
+                <span>天选之子：{{ rzdf }}</span>
+            </div>
+            <hr />
+
+            <div>
+                <h1>下拉框（单选）</h1>
+                <select v-model="selected">
+                    <option disabled value="">请选择</option>
+                    <option value="张麻子">张麻子</option>
+                    <option value="师爷">师爷</option>
+                    <option value="黄老爷">黄老爷</option>
+                </select>
+                <br />
+                <span>天选之子：{{ selected }}</span>
+            </div>
+
+            <div>
+                <h1>下拉框（多选）</h1>
+                <p>注意要按住Ctrl键多选</p>
+                <select multiple v-model="multiSelected">
+                    <option value="张麻子">张麻子</option>
+                    <option value="师爷">师爷</option>
+                    <option value="黄老爷">黄老爷</option>
+                </select>
+                <br />
+                <span>天选之子：{{ multiSelected }}</span>
+            </div>
         </div>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
@@ -45,7 +80,10 @@
                 data: {
                     mText: '',
                     mMultiMsg: '',
-                    picked: ''
+                    picked: '',
+                    rzdf: [],
+                    selected: '',
+                    multiSelected: []
                 }
             })
         </script>
