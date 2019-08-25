@@ -27,9 +27,10 @@
 
             <div>
                 <h1>单选按钮</h1>
-                <label><input type="radio" value="One" v-model="picked" />One</label>
+                <!-- 绑定了value才能设置默认选中 -->
+                <label><input type="radio" :value="vOne" v-model="picked" />One</label>
                 <br />
-                <label><input type="radio" value="Two" v-model="picked" />Two</label>
+                <label><input type="radio" :value="vTwo" v-model="picked" />Two</label>
                 <br />
                 <span>Picked: {{ picked }}</span>
             </div>
@@ -37,11 +38,30 @@
 
             <div>
                 <h1>复选框</h1>
-                <label>张麻子<input type="checkbox" v-model="rzdf" value="张麻子" id=""/></label>
-                <label>师爷<input type="checkbox" v-model="rzdf" value="师爷" id=""/></label>
-                <label>黄老爷<input type="checkbox" v-model="rzdf" value="黄老爷" id=""/></label>
+                <label>
+                    张麻子
+                    <input type="checkbox" v-model="rzdf" value="张麻子" />
+                </label>
+                <label>
+                    师爷
+                    <input type="checkbox" v-model="rzdf" value="师爷" />
+                </label>
+                <label>
+                    黄老爷
+                    <input type="checkbox" v-model="rzdf" value="黄老爷" />
+                </label>
                 <br />
                 <span>天选之子：{{ rzdf }}</span>
+                <br /><br />
+                <h2>复选框v-bind</h2>
+                <label>
+                    动态绑定的复选框：
+                    <input type="checkbox" v-model="toggle" :true-value="value1" :false-value="value2" />
+                </label>
+                <br />
+                {{ toggle }} <br />
+                选中了：{{ toggle === value1 }} <br />
+                没选中：{{ toggle === value2 }}
             </div>
             <hr />
 
@@ -52,10 +72,12 @@
                     <option value="张麻子">张麻子</option>
                     <option value="师爷">师爷</option>
                     <option value="黄老爷">黄老爷</option>
+                    <option :value="{num:111}">111</option>
                 </select>
                 <br />
-                <span>天选之子：{{ selected }}</span>
+                <span>天选之子：{{ typeof selected }}---{{ selected }}</span>
             </div>
+            <hr />
 
             <div>
                 <h1>下拉框（多选）</h1>
@@ -67,6 +89,31 @@
                 </select>
                 <br />
                 <span>天选之子：{{ multiSelected }}</span>
+            </div>
+            <hr />
+
+            <div>
+                <h1>.lazy</h1>
+                <p>不会实时渲染的文本（敲回车才会渲染）：{{ lazyInput }}</p>
+                <input type="text" v-model.lazy="lazyInput" />
+            </div>
+
+            <div>
+                <h1>.number</h1>
+                <p>
+                    自动转换为number类型：{{ typeof numInput }}---{{ numInput }} <br />
+                    Tips:转换规则遵循 parseInt 和 parseFloat
+                </p>
+                <input type="text" v-model.number="numInput" />
+            </div>
+
+            <div>
+                <h1>.trim</h1>
+                <p>去掉输入字符串的首尾空格：{{ trimInput }}</p>
+                <p>length: {{ trimInput.length }}</p>
+
+                <label>没有trim: <input type="text" v-model="trimInput"/></label> <br />
+                <label>有trim: <input type="text" v-model.trim="trimInput"/></label>
             </div>
         </div>
         <script
@@ -80,10 +127,24 @@
                 data: {
                     mText: '',
                     mMultiMsg: '',
+
+                    // 单选框的动态绑定v-bind
                     picked: '',
+                    vOne: 'one picked',
+                    vTwo: 'two picked',
+
                     rzdf: [],
+
+                    // 复选框的动态绑定v-bind
+                    toggle: '',
+                    value1: `OMG, I'm selected!`,
+                    value2: 'No one',
+
                     selected: '',
-                    multiSelected: []
+                    multiSelected: [],
+                    lazyInput: '',
+                    numInput: '',
+                    trimInput: ''
                 }
             })
         </script>
