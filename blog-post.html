@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>blog-post</title>
+        <style>
+            table {
+                margin: 1rem;
+                border-collapse: collapse;
+                border: 1px solid #aaa;
+            }
+
+            table td,
+            table th {
+                border-collapse: collapse;
+                border: 1px solid #aaa;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app">
+            <!-- <blog-post title="My journey with Vue"></blog-post>
+            <blog-post v-bind:title="post.title + ' by ' + post.author.name"></blog-post> -->
+            <blog-post
+                v-bind="{
+                title: 'My journey with Vue',
+                likes: 58,
+                author: {
+                    name: 'Veronica',
+                    company: 'Veridian Dynamics'
+                }
+            }"
+            ></blog-post>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data() {
+                    return {}
+                },
+                components: {
+                    'blog-post': {
+                        props: {
+                            title: String,
+                            likes: Number,
+                            isPublished: Boolean,
+                            commentIds: Array,
+                            author: Object,
+                            callback: Function,
+                            contactsPromise: Promise // or any other constructor
+                        },
+                        data() {
+                            return {}
+                        },
+                        template: `
+                        <div>
+                            <table>
+                                <thead>
+                                    <th>{{ title }}</th>
+                                </thead>
+                                <tbody>
+                                    <th>likes</th>
+                                    <td>{{ likes }}</td>
+                                    <th>author</th>
+                                    <td>{{ author.name }} - {{ author.company }}</td>
+                                </tbody>
+                            </table>
+                        </div>
+                        `
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
