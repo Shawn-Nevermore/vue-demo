@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>组件间通信</title>
+        <style>
+            #app {
+                border: 2px solid blue;
+                padding: 1rem;
+            }
+            .childComponent {
+                border: 1px solid green;
+                padding: 1rem;
+            }
+            h1 {
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <h1>我是父组件</h1>
+            <child-component message="我是来自父组件的message"></child-component>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                components: {
+                    'child-component': {
+                        props: ['message'],
+                        template: '<div class="childComponent">子组件的内容是：{{ message }}</div>'
+                    }
+                },
+                data() {
+                    return {
+                        message: ''
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
