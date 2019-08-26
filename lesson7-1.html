@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>组件的注册</title>
+
+        <style>
+            button-counter {
+                border: 1px solid red;
+                padding: 1rem;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app">
+            <div>
+                <h1>全局注册的component</h1>
+                <button-counter></button-counter>
+                <button-counter></button-counter>
+                <p>
+                    vue组件的模板在某些情况下会受到html标签的限制，比如
+                    table中只能还有tr,td这些元素，所以直接在table中使用组件是无效的，此时可以使用is属性来挂载组件
+                </p>
+                <p>
+                    table中的组件（看源码的DOM结构）：
+                </p>
+                <table>
+                    <tbody is="button-counter"></tbody>
+                </table>
+            </div>
+
+            <div>
+                <h1>局部注册的component</h1>
+                <inner-component-a></inner-component-a>
+            </div>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            /************** 全局注册的component ****************/
+            // 组件要定义在new Vue()前面，组件之间互相独立
+            Vue.component('button-counter', {
+                data() {
+                    return {
+                        count: 0
+                    }
+                },
+                template: `<button v-on:click="count++">You clicked me {{ count }} times.</button>`
+            })
+
+            var innerComponentA = {
+                data() {
+                    return {
+                        infoInput: ''
+                    }
+                },
+                template: `
+                    <div id='innerInfo' style="border:1px solid green; padding: 1rem;">
+                        <p>您的信息是：{{ infoInput }}</p>
+                        <p>trim后的lenth：{{ infoInput.length }}</p>
+                        <input type="text" v-model.trim.lazy="infoInput" placeholder="请输入您的信息" />
+                    </div>
+                `
+            }
+
+            var app = new Vue({
+                el: '#app',
+                components: {
+                    'inner-component-a': innerComponentA
+                },
+                data() {
+                    return {}
+                }
+            })
+        </script>
+    </body>
+</html>
