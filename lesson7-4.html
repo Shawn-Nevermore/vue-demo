@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Prop验证</title>
+
+        <style>
+            table {
+                border-collapse: collapse;
+            }
+
+            table th,
+            table td {
+                border: 1px solid #aaa;
+                padding: 1rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <type-component :prop-a="a" :prop-b="b" :prop-c="c" :prop-d="d" :prop-e="e" :prop-f="f"> </type-component>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data() {
+                    return {
+                        a: 12,
+                        b: 111,
+                        c: 'haha',
+                        d: 99,
+                        e: new Object(),
+                        f: 'success'
+                    }
+                },
+                components: {
+                    'type-component': {
+                        props: {
+                            // 基础的类型检查 (`null` 和 `undefined` 会通过任何类型验证)
+                            propA: Number,
+                            // 多个可能的类型
+                            propB: [String, Number],
+                            // 必填的字符串
+                            propC: {
+                                type: String,
+                                required: true
+                            },
+                            // 带有默认值的数字
+                            propD: {
+                                type: Number,
+                                default: 100
+                            },
+                            // 带有默认值的对象
+                            propE: {
+                                type: Object,
+                                // 对象或数组默认值必须从一个工厂函数获取
+                                default: function() {
+                                    return { message: 'hello' }
+                                }
+                            },
+                            // 自定义验证函数
+                            propF: {
+                                validator: function(value) {
+                                    // 这个值必须匹配下列字符串中的一个
+                                    return ['success', 'warning', 'danger'].indexOf(value) !== -1
+                                }
+                            }
+                        },
+                        template: `
+                            <table>
+                                <tr>
+                                    <th>propA</th>
+                                    <td>{{ propA }}</td>
+                                </tr>
+                                <tr>
+                                    <th>propB</th>
+                                    <td>{{ propB }}</td>
+                                </tr>
+                                <tr>
+                                    <th>propC</th>
+                                    <td>{{ propC }}</td>
+                                </tr>
+                                <tr>
+                                    <th>propD</th>
+                                    <td>{{ propD }}</td>
+                                </tr>
+                                <tr>
+                                    <th>propE</th>
+                                    <td>{{ propE }}</td>
+                                </tr>
+                                <tr>
+                                    <th>propF</th>
+                                    <td>{{ propF }}</td>
+                                </tr>
+                            </table>
+                        `
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
