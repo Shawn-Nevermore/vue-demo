@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>单向数据流</title>
+    </head>
+    <body>
+        <div id="app">
+            <my-component init-count="666"></my-component>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                components: {
+                    // 1.注册组件
+                    'my-component': {
+                        // 2.将父组件的数据传递进来，并且在子组件中用props接收
+                        props: ['initCount'],
+                        template: '<div>{{ initCount }}</div>',
+                        data() {
+                            return {
+                                // 3.将传递进来的数据通过初始值保存起来
+                                count: this.initCount
+                            }
+                        }
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
