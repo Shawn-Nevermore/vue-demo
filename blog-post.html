@@ -14,8 +14,12 @@
 
             table td,
             table th {
+                padding: 1rem;
                 border-collapse: collapse;
                 border: 1px solid #aaa;
+            }
+            table thead {
+                background: #eee;
             }
         </style>
     </head>
@@ -64,13 +68,20 @@
                         <div>
                             <table>
                                 <thead>
-                                    <th>{{ title }}</th>
+                                    <tr span="2">
+                                        <th>title</th>
+                                        <td>{{ title }}</td>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    <th>likes</th>
-                                    <td>{{ likes }}</td>
-                                    <th>author</th>
-                                    <td>{{ author.name }} - {{ author.company }}</td>
+                                    <tr>
+                                        <th>likes</th>
+                                        <td>{{ likes }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>author</th>
+                                        <td>{{ author.name }} - {{ author.company }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
