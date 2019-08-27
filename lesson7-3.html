@@ -8,7 +8,17 @@
     </head>
     <body>
         <div id="app">
-            <my-component init-count="666"></my-component>
+            <div>
+                <h2>1.props传递一个初始值（用data保存）</h2>
+                <span>我是父组件中的init-count: </span>
+                <!-- 在HTML中，不允许使用驼峰命名，因此不能写成initCount -->
+                <my-count init-count="666"></my-count>
+            </div>
+            <div>
+                <h2>2.props传递一个需要转变的值（定义一个computed属性）</h2>
+                <input type="number" v-model="myWidth" placeholder="输入数字改变下面横条的宽度" />
+                <changeable-bar :width="myWidth"></changeable-bar>
+            </div>
         </div>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
@@ -20,16 +30,35 @@
                 el: '#app',
                 components: {
                     // 1.注册组件
-                    'my-component': {
+                    'my-count': {
                         // 2.将父组件的数据传递进来，并且在子组件中用props接收
-                        props: ['initCount'],
-                        template: '<div>{{ initCount }}</div>',
+                        props: ['initCount'], // 这里两种命名方式都可以
+                        template: '<div>{{ initCount }}</div>', // 在template中，必须使用驼峰命名，用短横线会出错
                         data() {
                             return {
                                 // 3.将传递进来的数据通过初始值保存起来
-                                count: this.initCount
+                                // count: this.initCount
+                                count: this['init-count'] // 用this.XXX引用时，必须使用驼峰命名，或者使用this['XX-XXX']
                             }
                         }
+                    },
+                    'changeable-bar': {
+                        props: ['width'],
+                        template: '<div :style="styleObject"></div>',
+                        computed: {
+                            styleObject() {
+                                return {
+                                    width: this.width + 'px',
+                                    background: '#ddd',
+                                    height: '30px'
+                                }
+                            }
+                        }
+                    }
+                },
+                data() {
+                    return {
+                        myWidth: 100
                     }
                 }
             })
