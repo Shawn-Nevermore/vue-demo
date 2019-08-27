@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>组件通信</title>
+    </head>
+    <body>
+        <div id="app">
+            <h1>自定义事件-子组件给父组件传递数据</h1>
+            <p style="padding-left: 3rem;">
+                使用 v­-on 除了监昕 DOM 事件外，还可以用于组件之间的自定义事件。<br />
+                观察者模式中dispatchEvent和addEventListener这两个方法。<br />
+                Vue组件也有与之类似的一套模式，子组件用$emit()来触发事件，父组件用$on()来监听子组件的事件。
+            </p>
+            <hr />
+
+            <div>
+                <p>您好，您的账户余额是：￥{{ total }}</p>
+                <btn-component @change="handleTotal" :count="total"></btn-component>
+            </div>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data() {
+                    return {
+                        total: 8000
+                    }
+                },
+                methods: {
+                    handleTotal(total) {
+                        this.total = total
+                    }
+                },
+                components: {
+                    'btn-component': {
+                        props: ['count'],
+                        methods: {
+                            handleAdd() {
+                                this.count += 1000
+                                return this.$emit('change', this.count)
+                            },
+                            handleMinus() {
+                                this.count -= 1000
+                                return this.$emit('change', this.count)
+                            }
+                        },
+                        template: `
+                            <div>
+                                <button @click="handleAdd">+1000</button>
+                                <button @click="handleMinus">-1000</button>
+                            </div>
+                        `
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
