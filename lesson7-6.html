@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>组件上使用 v-model</title>
+    </head>
+    <body>
+        <div id="app">
+            <p style="padding-left: 3rem;">
+                v-model 其实是一个语法糖，这背后其实做了两个操作：<br />
+                1.v-bind 绑定一个 value 属性 <br />
+                2.v-on 指令给当前元素绑定 input 事件 <br /><br />
+
+                为了让它正常工作，这个组件内的 input 必须：<br />
+                1.将其 value 特性绑定到一个名叫 value 的 prop 上<br />
+                2.在其 input 事件被触发时，将新的值通过自定义的 input 事件抛出<br />
+            </p>
+            <hr />
+
+            <div>
+                <p>您好，您的账户余额是：￥{{ total }}</p>
+                <btn-component v-model="total"></btn-component>
+            </div>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data() {
+                    return {
+                        total: 8000
+                    }
+                },
+                components: {
+                    'btn-component': {
+                        props: ['value'], // 这里的命名必须是value
+                        methods: {
+                            handleAdd() {
+                                this.value += 1000
+                                return this.$emit('input', this.value) // 这里的事件名必须是input
+                            },
+                            handleMinus() {
+                                // 解决了到0就不再减
+                                this.value = this.value > 0 ? this.value - 1000 : 0
+                                return this.$emit('input', this.value)
+                            }
+                        },
+                        template: `
+                            <div>
+                                <button @click="handleAdd">+1000</button>
+                                <button @click="handleMinus">-1000</button>
+                            </div>
+                        `
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
