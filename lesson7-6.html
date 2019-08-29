@@ -41,15 +41,20 @@
                 components: {
                     'btn-component': {
                         props: ['value'], // 这里的命名必须是value
+                        data() {
+                            return {
+                                count: this.value // 单向数据流，不能直接修改 props 的值
+                            }
+                        },
                         methods: {
                             handleAdd() {
-                                this.value += 1000
-                                return this.$emit('input', this.value) // 这里的事件名必须是input
+                                this.count += 1000
+                                return this.$emit('input', this.count) // 这里的事件名必须是input
                             },
                             handleMinus() {
                                 // 解决了到0就不再减
-                                this.value = this.value > 0 ? this.value - 1000 : 0
-                                return this.$emit('input', this.value)
+                                this.count = this.count > 0 ? this.count - 1000 : 0
+                                return this.$emit('input', this.count)
                             }
                         },
                         template: `

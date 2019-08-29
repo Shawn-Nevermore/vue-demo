@@ -19,7 +19,7 @@
             <div>
                 <p>您好，您的账户余额是：￥{{ total }}</p>
                 <!-- 1.自定义事件 -->
-                <btn-component @change="handleTotal" :count="total"></btn-component>
+                <btn-component @change="handleTotal" :total="total"></btn-component>
             </div>
         </div>
         <script
@@ -44,10 +44,18 @@
                 },
                 components: {
                     'btn-component': {
-                        props: ['count'],
+                        props: ['total'],
+                        data() {
+                            return {
+                                count: this.total // 单向数据流，不能直接修改 props 的值
+                            }
+                        },
+
                         // 2.在子组件中用$emit触发事件，第一个参数是事件名，后边的参数是要传递的数据
                         methods: {
                             handleAdd() {
+                                console.log(this.count)
+
                                 this.count += 1000
                                 return this.$emit('change', this.count)
                             },
