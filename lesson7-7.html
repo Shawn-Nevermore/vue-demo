@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>中央事件总线 EventBus</title>
+    </head>
+    <body>
+        <div id="app">
+            <p style="padding-left: 3rem;"></p>
+            <hr />
+
+            <div>
+                <p>您好，您的账户余额是：￥{{ total }}</p>
+                <btn-component v-model="total"></btn-component>
+            </div>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data() {
+                    return {
+                        total: 8000
+                    }
+                },
+                components: {
+                    'btn-component': {
+                        props: ['value'], // 这里的命名必须是value
+                        methods: {
+                            handleAdd() {
+                                return this.$emit('input', this.value + 1000) // 这里的事件名必须是input
+                            },
+                            handleMinus() {
+                                // 解决了到0就不再减
+                                return this.$emit('input', this.value > 0 ? this.value - 1000 : 0)
+                            },
+                            setValue() {
+                                this.$root.total += 1000
+                            }
+                        },
+                        template: `
+                            <div>
+                                <button @click="handleAdd">+1000</button>
+                                <button @click="handleMinus">-1000</button>
+                                <button @click="setValue">重置为1</button>
+                            </div>
+                        `
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
