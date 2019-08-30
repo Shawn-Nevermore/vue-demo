@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>单个 slot 和具名 slot</title>
+    </head>
+    <body>
+        <div id="app">
+            <my-component>
+                {{ message }}
+            </my-component>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+
+        <script>
+            Vue.component('my-component', {
+                template: `
+                <div>
+                    <slot>
+                        如果父组件没有插入内容，我就作为默认内容。
+                    </slot>
+                </div>
+                `
+            })
+
+            const app = new Vue({
+                el: '#app',
+                data() {
+                    return {
+                        message: '我是来自父组件的消息'
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
