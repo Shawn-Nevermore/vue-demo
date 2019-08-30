@@ -9,8 +9,26 @@
     <body>
         <div id="app">
             <my-component>
+                <!-- 父组件的作用域，读取的是父组件的message -->
                 {{ message }}
             </my-component>
+
+            <hr />
+
+            <base-layout>
+                <!-- 注意 v-slot 只能添加在一个 <template> 上 -->
+                <!-- 例外情况：当被提供的内容只有默认插槽时，组件的标签才可以被当作插槽的模板来使用。这样我们就可以把 v-slot 直接用在组件上 -->
+                <template v-slot:header>
+                    <h1>Here might be a page title</h1>
+                </template>
+
+                <p>A paragraph for the main content.</p>
+                <p>And another one.</p>
+
+                <template v-slot:footer>
+                    <p>Here's some contact info</p>
+                </template>
+            </base-layout>
         </div>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
@@ -20,8 +38,16 @@
 
         <script>
             Vue.component('my-component', {
+                data() {
+                    return {
+                        message: '我是子组件的message'
+                    }
+                },
                 template: `
                 <div>
+                    <!-- 子组件作用域，读取的是子组件的message -->
+                    {{ message }} 
+
                     <slot>
                         如果父组件没有插入内容，我就作为默认内容。
                     </slot>
@@ -29,11 +55,27 @@
                 `
             })
 
+            Vue.component('base-layout', {
+                template: `
+                    <div class="container">
+                        <header>
+                            <slot name="header"></slot>
+                        </header>
+                        <main>
+                            <slot></slot>
+                        </main>
+                        <footer>
+                            <slot name="footer"></slot>
+                        </footer>
+                    </div>
+                `
+            })
+
             const app = new Vue({
                 el: '#app',
                 data() {
                     return {
-                        message: '我是来自父组件的消息'
+                        message: '我是来自父组件的message'
                     }
                 }
             })
