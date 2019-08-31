@@ -22,4 +22,6 @@
 -   7-7：中央事件总线 EventBus
 -   7-8：$parent 和 $refs
 -   7-9：默认 slot 和具名 slot
+-   7-10：作用域插槽
+-   
 -   

@@ -1,16 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>作用域插槽</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>作用域插槽</title>
+    </head>
+    <body>
+        <div id="app">
+            <h1>作用域插槽</h1>
+            <p>作用：从子组件中获取数据</p>
+
+            <!-- 写法一：解构插槽Prop -->
+            <!-- 解构赋值定义后备内容：用于插槽 prop 是 undefined 的情形 -->
+            <current-user v-slot="{ user = {firstName: 'Shawn'} }">
+                <h2>写法一：解构插槽Prop</h2>
+                <h4>user's firstName: {{ user.firstName }}</h4>
+                <h4>user's lastName: {{ user.lastName }}</h4>
+            </current-user>
+
+            <!-- 写法二：独占默认插槽的缩写语法 -->
+            <current-user v-slot="slotProps">
+                <h2>写法二：独占默认插槽的缩写语法</h2>
+                <h4>user's firstName: {{ slotProps.user.firstName }}</h4>
+                <h4>user's lastName: {{ slotProps.user.lastName }}</h4>
+            </current-user>
+
+            <!-- 写法三：具名插槽缩写 -->
+            <current-user #default="slotProps">
+                <h2>写法三：具名插槽缩写</h2>
+                <h4>user's firstName: {{ slotProps.user.firstName }}</h4>
+                <h4>user's lastName: {{ slotProps.user.lastName }}</h4>
+            </current-user>
+
+            <!-- 完整写法： -->
+            <current-user>
+                <template v-slot:default="slotProps">
+                    <h2>默写完整写法</h2>
+                    <h4>user's firstName: {{ slotProps.user.firstName }}</h4>
+                    <h4>user's lastName: {{ slotProps.user.lastName }}</h4>
+                </template>
+            </current-user>
+        </div>
         <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
-        integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
-        crossorigin="anonymous"
-    ></script>
-</body>
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            Vue.component('current-user', {
+                // 绑定在 <slot> 元素上的特性被称为插槽 prop
+                template: `
+                    <span>
+                        <slot :user="user">
+                            {{ user.lastName }}
+                        </slot>
+                    </span>
+                `,
+                data() {
+                    return {
+                        user: {
+                            firstName: 'Charles',
+                            lastName: 'Xu'
+                        }
+                    }
+                }
+            })
+            const app = new Vue({
+                el: '#app',
+                data() {
+                    return {}
+                }
+            })
+        </script>
+    </body>
 </html>
