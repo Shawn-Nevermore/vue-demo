@@ -21,5 +21,5 @@
 -   7-6：组件上使用 v-model
 -   7-7：中央事件总线 EventBus
 -   7-8：$parent 和 $refs
--   7-9：单个 slot 和具名 slot
+-   7-9：默认 slot 和具名 slot
 -   

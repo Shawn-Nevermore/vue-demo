@@ -4,22 +4,25 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>单个 slot 和具名 slot</title>
+        <title>默认 slot 和具名 slot</title>
     </head>
     <body>
         <div id="app">
-            <my-component>
+            <h1>默认插槽</h1>
+            <my-component style="border:1px solid green; padding:1rem;width:60%;">
                 <!-- 父组件的作用域，读取的是父组件的message -->
-                {{ message }}
+                我是你爸爸：{{ message }}
             </my-component>
 
             <hr />
 
-            <base-layout>
-                <!-- 注意 v-slot 只能添加在一个 <template> 上 -->
+            <h1>具名插槽</h1>
+            <base-layout style="border:1px solid green; padding:1rem;width: 60%;">
+                <!-- 注意 v-slot 只能添加在一个 <template> 上，slot 和 slot-scope 已经过时 -->
                 <!-- 例外情况：当被提供的内容只有默认插槽时，组件的标签才可以被当作插槽的模板来使用。这样我们就可以把 v-slot 直接用在组件上 -->
+                <!-- 下面的例子是默认插槽和具名插槽混合，不能在组件上使用 v-slot -->
                 <template v-slot:header>
-                    <h1>Here might be a page title</h1>
+                    <h2>Here might be a page title</h2>
                 </template>
 
                 <p>A paragraph for the main content.</p>
@@ -45,12 +48,15 @@
                 },
                 template: `
                 <div>
-                    <!-- 子组件作用域，读取的是子组件的message -->
-                    {{ message }} 
-
+                    <p>爸爸：</p>
                     <slot>
                         如果父组件没有插入内容，我就作为默认内容。
                     </slot>
+                    <hr>
+
+                    <p>儿子：</p>
+                    <!-- 子组件作用域，读取的是子组件的message -->
+                    {{ message }} 
                 </div>
                 `
             })
