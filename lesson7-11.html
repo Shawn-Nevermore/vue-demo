@@ -5,10 +5,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>动态组件</title>
+
+        <link rel="stylesheet" href="dynamic-component-demo.css" />
     </head>
+
     <body>
         <div id="app">
-            <div id="dynamic-component-keep-alive-demo" class="demo"></div>
+            <div id="dynamic-component-demo">
+                <div class="button-wrapper">
+                    <button
+                        v-for="tab in tabs"
+                        :key="tab"
+                        :class="['tab-button', { active: currentTab === tab }]"
+                        @click="currentTab = tab"
+                    >
+                        {{ tab }}
+                    </button>
+                </div>
+
+                <keep-alive>
+                    <component :is="currentTabComponent" class="tab"></component>
+                </keep-alive>
+            </div>
         </div>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
@@ -17,6 +35,29 @@
         ></script>
         <script>
             Vue.component('tab-posts', {
+                template: `
+                    <div class="posts-tab">
+                        <ul class="posts-sidebar">
+                            <li
+                                v-for="post in posts"
+                                :key="post.id"
+                                :class="{ selected: post === selectedPost }"
+                                @click="selectedPost = post"
+                            >
+                                {{ post.title }}
+                            </li>
+                        </ul>
+                        <div class="selected-post-container">
+                            <div v-if="selectedPost" class="selected-post">
+                                <h3>{{ selectedPost.title }}</h3>
+                                <div v-html="selectedPost.content"></div>
+                            </div>
+                            <strong v-else>
+                                Click on a blog title to the left to view it.
+                            </strong>
+                        </div>
+                    </div>
+                `,
                 data() {
                     return {
                         posts: [
@@ -39,30 +80,19 @@
                                     '<p>Icing dessert soufflé lollipop chocolate bar sweet tart cake chupa chups. Soufflé marzipan jelly beans croissant toffee marzipan cupcake icing fruitcake. Muffin cake pudding soufflé wafer jelly bear claw sesame snaps marshmallow. Marzipan soufflé croissant lemon drops gingerbread sugar plum lemon drops apple pie gummies. Sweet roll donut oat cake toffee cake. Liquorice candy macaroon toffee cookie marzipan.</p>'
                             }
                         ],
-                        selectedPost: {}
+                        selectedPost: null
                     }
-                },
+                }
+            })
+
+            Vue.component('tab-archive', {
                 template: `
-                    <div>
-                        <ul>
-                            <li v-for="post in posts">{{ post.title }}</li>
-                        </ul>
-                        <div class="container">
-                            <div class="post">
-                                <h3>{{ post.title }}</h3>
-                                <div>
-                                    {{ post.content }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div>Archive component</div>
                 `
             })
 
-            Vue.component('tab-archive', {})
-
             const app = new Vue({
-                el: '#app',
+                el: '#dynamic-component-demo',
                 data() {
                     return {
                         currentTab: 'Posts',
@@ -70,16 +100,10 @@
                     }
                 },
                 computed: {
-                    currentTabComponent() {}
-                },
-                template: `
-                    <div>
-                        <button>{{ tabs[0] }}</button>
-                        <button>{{ tabs[1] }}</button>
-                        <tab-post></tab-posts>
-                        <tab-archive></tab-archive>
-                    </div>
-                `
+                    currentTabComponent() {
+                        return 'tab-' + this.currentTab.toLowerCase()
+                    }
+                }
             })
         </script>
     </body>
