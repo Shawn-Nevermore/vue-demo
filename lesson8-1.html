@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>自定义指令</title>
+    </head>
+    <body>
+        <div id="hook-arguments-example" v-demo:foo.a.b.c="message"></div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            Vue.directive('demo', {
+                bind(el, binding, vnode) {
+                    var s = JSON.stringify
+                    el.innerHTML = `
+                        <span>name: ${s(binding.name)}</span><br> 
+                        <span>value: ${s(binding.value)}</span><br> 
+                        <span>expression: ${s(binding.expression)}</span><br> 
+                        <span>arguments: ${s(binding.arg)}</span><br> 
+                        <span>modifiers: ${s(binding.modifiers)}</span><br> 
+                        <span>vnode: ${Object.keys(vnode).join(', ')}</span><br> 
+                    `
+                }
+            })
+
+            const app = new Vue({
+                el: '#hook-arguments-example',
+                data() {
+                    return {
+                        message: '我是value'
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
