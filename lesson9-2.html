@@ -35,7 +35,7 @@
                         // 3.Function
                         (() => {
                             return {
-                                template: `<h1>离离原上草</h1>`
+                                template: `<div>离离原上草</div>`
                             }
                         })(),
 
@@ -66,7 +66,7 @@
                             },
                             // DOM 属性
                             domProps: {
-                                innerHTML: '<span style="color: blue; font-size: 99px;">我是你爸爸</span>'
+                                innerHTML: '<div style="color: blue; font-size: 99px;">我是你爸爸</div>'
                             },
                             // 事件监听器在 `on` 属性内，
                             // 但不再支持如 `v-on:keyup.enter` 这样的修饰器。
@@ -105,7 +105,21 @@
                             // 如果你在渲染函数中给多个元素都应用了相同的 ref 名，
                             // 那么 `$refs.myRef` 会变成一个数组。
                             refInFor: true
-                        }
+                        },
+
+                        /**
+                         * 第三个参数：{String | Array}，可选。
+                         * 子级虚拟节点 (VNodes)，由 `createElement()` 构建而成，也可以使用字符串来生成“文本虚拟节点”。
+                         */
+                        [
+                            '先写一些文字',
+                            createElement('h1', '一则头条'),
+                            createElement('div', {
+                                props: {
+                                    someProp: 'foobar'
+                                }
+                            })
+                        ]
                     )
                 }
             })
