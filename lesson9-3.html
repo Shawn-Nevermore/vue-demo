@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>插槽在render函数中的运用</title>
+    </head>
+    <body>
+        <div id="app">
+            <slots-demo>
+                <p>阳光下的泡沫　是彩色的 就像被骗的我　是幸福的 追究什么对错　你的谎言 基于你还爱我</p>
+                <p>美丽的泡沫　虽然一刹花火 你所有承诺　虽然都太脆弱 但爱像泡沫　如果能够看破 有什么难过</p>
+                <template #header>
+                    <h1>泡沫</h1>
+                    <h3>演唱：邓紫棋</h3>
+                </template>
+                <template #footer>
+                    <button>点击这里下载</button>
+                </template>
+            </slots-demo>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            Vue.component('slots-demo', {
+                render(createElement) {
+                    // 这返回的内容就是含有VNODE的数组
+                    debugger
+                    let header = this.$slots.header
+                    let main = this.$slots.default
+                    let footer = this.$slots.footer
+                    return createElement('div', [
+                        createElement('header', header),
+                        createElement('main', main),
+                        createElement('footer', footer)
+                    ])
+                }
+            })
+            const app = new Vue({
+                el: '#app'
+            })
+        </script>
+    </body>
+</html>
