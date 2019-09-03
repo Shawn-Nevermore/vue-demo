@@ -19,6 +19,11 @@
                     <button>点击这里下载</button>
                 </template>
             </slots-demo>
+
+            <hr />
+            <h1>props在render函数中传递数据</h1>
+            <button @click="switchShow" style="padding: 1rem;">点我切换妹子图</button><br />
+            <switch-img :show="show"></switch-img>
         </div>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
@@ -29,7 +34,7 @@
             Vue.component('slots-demo', {
                 render(createElement) {
                     // 这返回的内容就是含有VNODE的数组
-                    debugger
+                    // debugger
                     let header = this.$slots.header
                     let main = this.$slots.default
                     let footer = this.$slots.footer
@@ -40,8 +45,37 @@
                     ])
                 }
             })
+
+            Vue.component('switch-img', {
+                props: ['show'],
+                render(createElement) {
+                    // <img src="" alt="妹子图" />
+                    let imgSrc = this.show ? 'img/true.gif' : 'img/false.gif'
+                    let alt = '妹子图'
+                    return createElement('img', {
+                        attrs: {
+                            src: imgSrc,
+                            alt: alt
+                        },
+                        style: {
+                            width: '500px'
+                        }
+                    })
+                }
+            })
+
             const app = new Vue({
-                el: '#app'
+                el: '#app',
+                data() {
+                    return {
+                        show: false
+                    }
+                },
+                methods: {
+                    switchShow() {
+                        this.show = !this.show
+                    }
+                }
             })
         </script>
     </body>
