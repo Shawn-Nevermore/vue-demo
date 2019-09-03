@@ -27,4 +27,4 @@
 -   8-1：自定义指令
 -   9-1：render函数初识
 -   9-2：createElement函数的参数
--   9-3：默认插槽在render函数中的运用
+-   9-3：默认插槽在render函数中的运用（props在render函数中传递数据）
