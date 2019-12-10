@@ -28,3 +28,4 @@
 -   9-1：render函数初识
 -   9-2：createElement函数的参数
 -   9-3：默认插槽在render函数中的运用（props在render函数中传递数据）
+-   9-4：v-model在render函数中的使用
