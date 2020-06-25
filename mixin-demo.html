@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mixin 演示</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <!-- <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.0-beta.15/vue.cjs.min.js"
+            integrity="sha256-xQ9PRJ99ZO2l+uiduA1Us3By6c9im3HEM5e66xrSBec="
+            crossorigin="anonymous"
+        ></script> -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"
+            integrity="sha256-chlNFSVx3TdcQ2Xlw7SvnbLAavAQLO0Y/LBiWX04viY="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            var myMixin = {
+                created: function () {
+                    this.hello()
+                },
+                methods: {
+                    hello: function () {
+                        console.log('hello from mixin!')
+                    },
+                },
+            }
+
+            var Component = Vue.extend({
+                mixins: [myMixin],
+                methods: {
+                    hello() {
+                        console.log('hello from options')
+                    },
+                },
+            })
+
+            var component = new Component()
+        </script>
+    </body>
+</html>

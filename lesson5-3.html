@@ -21,7 +21,7 @@
                 <p>把大象装冰箱需要几个步骤：</p>
                 <ol>
                     <li v-for="(step, index) in steps">
-                        {{ stepsMessage }}---(index+1):{{ index + 1 }}---{{ step.step }}
+                        {{ stepsMessage }}---(index+1):{{ index+1 }}---{{ step.s }}
                     </li>
                 </ol>
             </div>
@@ -53,7 +53,7 @@
                         { name: 'Flutter' }
                     ],
                     stepsMessage: '把大象装冰箱的步骤',
-                    steps: [{ step: '把冰箱门打开' }, { step: '把大象塞进去' }, { step: '把冰箱门关上' }],
+                    steps: [{ s: '把冰箱门打开' }, { s: '把大象塞进去' }, { s: '把冰箱门关上' }],
                     someone: {
                         name: 'Charles',
                         job: 'Front-end Engineer',
